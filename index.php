@@ -32,7 +32,7 @@
 
 		// Datos de la base de datos
 	$usuario = "root";
-	$password = "NEWPASSWORD";
+	$password = "";
 	$servidor = "localhost";
 	$basededatos = "actores";
 	
@@ -49,12 +49,30 @@
 	  $img = str_replace(' ', '+', $img);
 	  $data = base64_decode($img);
 	  $file = 'uploads/img'.date("YmdHis").'.png';
+
+	  $nombre = $_POST['nombre'];
+	  $apellidos = $_POST['apellidos'];
+	  $email = $_POST['email'];
+	  $telefono = $_POST['telefono'];
+	  $ciudad = $_POST['ciudad'];
 	  
+
+	  $sql = "insert into actor (nombre, apellidos, email, telefono, ciudad, imagen) values ('$nombre','$apellidos','$email','$telefono','$ciudad','$file')";
+	  
+	  if (mysqli_query($conexion, $sql)) {
+    	 echo "Información registrada";
+    	 file_put_contents($file, $data);
+		}else{
+			echo "Error, intente de nuevo";
+		}
+	  /*
+
 	  if (file_put_contents($file, $data)) {
 	     echo "<p>Información enviada correctamente.</p>";
 	  } else {
 	     echo "<p>Ha ocurrido un error al momento de enviar.</p>";
 	  }	
+	  */
 	  
 	}
 					 
@@ -71,29 +89,29 @@
 			
 			<div class="row">
 				<div class="input-field col s12 m6">
-          			<input id="first_name" type="text" class="validate" >
+          			<input id="first_name" type="text" class="validate" name="nombre">
           			<label for="first_name">Nombre</label>
         		</div>
         		<div class="input-field col s12 m6">
-          			<input id="last_name" type="text" class="validate" >
+          			<input id="last_name" type="text" class="validate" name="apellidos">
           			<label for="last_name">Apellidos</label>
         		</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12 m6">
-          			<input id="correo" type="email" class="validate" >
+          			<input id="correo" type="email" class="validate" name="email">
           			<label for="correo">Correo electrónico</label>
         		</div>
         		<div class="input-field col s12 m6">
-          			<input id="telefono" type="tel" class="validate" >
+          			<input id="telefono" type="tel" class="validate" name="telefono">
           			<label for="telefono">Teléfono</label>
         		</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s12 m6">
-          			<input id="calle" type="text" class="validate">
+          			<input id="calle" type="text" class="validate" name="ciudad">
           			<label for="calle">Ciudad</label>
         		</div>
 			</div>
